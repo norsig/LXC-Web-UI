@@ -1,4 +1,6 @@
 # LXC-Web-UI
+![alt tag](https://northernsignal.com/norsiglogo802.png)
+
 Web User Interface for LXC Containers
 
 Please ensure to use al least lxc 1.0.4. 
