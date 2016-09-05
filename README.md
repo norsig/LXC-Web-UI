@@ -1,5 +1,5 @@
 # LXC-Web-UI
-![alt tag](https://northernsignal.com/norsiglogo802.png)
+![Northern Signal Open Source](https://northernsignal.com/norsiglogo802.png)
 
 Web User Interface for LXC Containers
 
