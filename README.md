@@ -1,5 +1,5 @@
 # LXC-Web-UI
-<img src="https://northernsignal.com/norsiglogo802.png">
+<a href="https://northernsignal.com"><img src="https://northernsignal.com/norsiglogo802.png"></a>
 
 Web User Interface for LXC Containers
 
