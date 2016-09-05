@@ -1,30 +1,11 @@
 # LXC-Web-UI
 Web User Interface for LXC Containers
 
-If you use this fork please ensure to use al least lxc 1.0.4. The code was tested on Ubuntu 12.04 and 14.04.
+Please ensure to use al least lxc 1.0.4. 
 
-On ubuntu 12.04 you should install:
+Install From Source
 
-LXC from this ppa: https://launchpad.net/~ubuntu-lxc/+archive/daily
-python-flask from ppa: https://launchpad.net/~chris-lea/+archive/python-flask
-Installation on deb based system
-
-The latest debian packages are released using packagecloud.io service since version 0.9, please update your repo config. The install script can be found at https://packagecloud.io/claudyus/LXC-Web-Panel/install
-
-Installation of the package can be done typing:
-
-sudo apt-get install lwp
-Version released before 0.9 can be downloaded at http://claudyus.github.io/LXC-Web-Panel/download.html
-
-Installation on rpm system or from source code
-
-If you want to run lwp from source code or in a rpm based system like Fedora you can follow steps.
-
-On a fedora system you should install those deps.
-
-sudo yum update
-sudo yum install lxc lxc-devel lxc-libs lxc-extra lxc-templates python-pam python-flask fabric pytz npm
-Now you should download source code and inside the source code directory run this steps
+Download source code and inside the source directory run these steps:
 
 fab build_assets         # build assets using python-fabric
 ./setup.py develop       # install python package
@@ -32,21 +13,21 @@ mkdir -p /etc/lwp        # create config/var dirs and popolate it
 mkdir -p /var/lwp
 cp lwp.example.conf /etc/lwp/lwp.conf
 cp lwp.db /var/lwp/lwp.db
-service firewalld stop   # for fedora
+service firewalld stop   
 service lxc start        # if service lxc exists
 ./bin/lwp --debug        # run lwp wth debug support
 Configuration
 
 Copy /etc/lwp/lwp.example.conf to /etc/lwp/lwp.conf
-edit it
-start lwp service as root service lwp start
-Your lwp panel is now at http://localhost:5000/ and default username and password are admin/admin.
+Edit it to your needs.
+Start lwp service as root:
+service lwp start
+
+Your LXC UI is now at http://localhost:5000/ and default username and password are admin/admin.
 
 SSL configuration
 
-SSL direct support was dropped after v0.6 release.
-
-You can configure nginx as reverse proxy if you want to use SSL encryption, see bug #34 for info.
+You can configure nginx as reverse proxy if you want to use SSL encryption.
 
 Authentication methods
 
@@ -56,9 +37,9 @@ LDAP
 
 To enable ldap auth you should set auth type to ldap inside your config file than configure all options inside ldap section. See lwp.example.conf for references.
 
-Pyhton LDAP need to be installed:
+Pyhton LDAP needs to be installed:
 
-apt-get install python-ldap
+install python-ldap
 htpasswd
 
 To enable authentication against htpasswd file you should set auth type to htpasswd and file variable in htpasswd section to point to the htpasswd file.
@@ -70,13 +51,8 @@ PAM
 
 To enable authentication against PAM you should set auth type to pam and service variable in pam section. Python PAM module needs to be installed:
 
-apt-get install python-pam
-or
-
 pip install pam
-or
 
-yum install python-pam
 With default login service all valid linux users can login to lwp. Many more options are available via PAM Configuration, see PAM docs.
 
 HTTP
@@ -86,32 +62,3 @@ This auth method is used to authenticate the users using an external http server
 Custom autenticators
 
 If you want to use different type of authentication, create appropriate file in authenticators/ directory with specific structure (example can be viewed in stub authenticator)
-
-File-bucket configuration
-
-To enable file bucket integration for the backup routine you shoul set to true the buckets key inside the global section of configuation file. Than add a section buckets like this:
-
-[global]
-.
-.
-buckets = True
-
-[buckets]
-buckets_host = remote_lan_ip
-buckets_port = 1234
-Developers/Debug
-
-After a fresh git clone you should download the bower component and setup the package for development purpose.
-
-fab build_assets
-sudo ./setup.py develop
-cp lwp.example.conf lwp.conf
-Now you can run lwp locally using sudo ./bin/lwp --debug
-
-Debug is just one of the available options to profile lwp you can use --profiling options, those options can also be used against the global installation using: sudo lwp --debug
-
-Anyway ensure to stop the lwp service if any: sudo service lwp stop
-
-To run test locally unsure that mock-lxc scripts are in PATH (export PATH=`pwd`/tests/mock-lxc:$PATH) than run fab dev_test
-
-To build a local debian package run fab debian
